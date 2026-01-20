@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Security.Cryptography;
+using WebAPI_Models_DTOs.DBContext;
 using WebAPI_Models_DTOs.DBContext.Models;
 using WebAPI_Models_DTOs.Dto;
 using WebAPI_Models_DTOs.Dto.Player;
@@ -12,6 +13,7 @@ namespace WebAPI_Models_DTOs.Services
 
         private readonly List<GetPlayerDetailResponse> _players;
         private readonly IMapper _mapper;
+        private readonly CodeFristDbContext _context;
         public PlayerService(IMapper mapper)
         {
             _mapper = mapper;
@@ -20,12 +22,12 @@ namespace WebAPI_Models_DTOs.Services
 
         public async Task CreatePlayerAsync(CreatePlayerRequest createPlayerRequest)
         {
-            var player = _mapper.Map<GetPlayerDetailResponse>(createPlayerRequest);
+            var player = _mapper.Map<Player>(createPlayerRequest);
             player.JoinedDate = DateTime.UtcNow;
             var PlayerInstrument = _mapper.Map<List<PlayerInstrument>>(createPlayerRequest.PlayerInstruments);
 
-          await _context.Players.AddAsync(player);
-            return Task.CompletedTask;
+          await _context.PlayerInstruments.AddRangeAsync(PlayerInstrument);
+            
         }
 
         public Task<bool> DeletePlayerAsync(int id)

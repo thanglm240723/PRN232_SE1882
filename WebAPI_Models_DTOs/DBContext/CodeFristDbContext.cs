@@ -12,7 +12,7 @@ namespace WebAPI_Models_DTOs.DBContext
         }
         public DbSet<Models.InstrumentType> InstrumentTypes { get; set; }
         public  DbSet<Models.Player> Players { get; set; }
-        public DbSet<Models.PlayerInstrument> Teams { get; set; }
+        public DbSet<Models.PlayerInstrument> PlayerInstruments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
